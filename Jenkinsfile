@@ -25,13 +25,7 @@ pipeline {
                             // Exécution du script Python
                             sh 'python3 hello_world.py'
                         }
-                    } else {
-                        // Gestion des systèmes Windows (facultatif)
-                        echo "Running on Windows"
-                        bat 'javac HelloWorld.java'
-                        bat 'java HelloWorld'
-                        bat 'python hello_world.py'
-                    }
+                    } 
                 }
             }
         }
