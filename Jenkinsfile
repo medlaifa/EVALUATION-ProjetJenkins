@@ -11,8 +11,8 @@ pipeline {
                 script {
                     if (isUnix()) {
                         withEnv([
-                            "JAVA_HOME=//usr/lib/jvm/java-11-openjdk",
-                            "PYTHON_HOME=/usr/bin",
+                            "JAVA_HOME=\C:\Program Files\Java\jdk-17",
+                            "PYTHON_HOME=\usr\bin",
                             "PATH=${env.PATH}:${JAVA_HOME}/bin:${PYTHON_HOME}"
                         ]) {
                             sh 'echo "Running on Unix"'
