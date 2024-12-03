@@ -1,9 +1,10 @@
+
 pipeline {
     agent any
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: ' https://github.com/medlaifa/EVALUATION-ProjetJenkins.git'
+                git branch: 'main', url: 'https://github.com/medlaifa/EVALUATION-ProjetJenkins.git'
             }
         }
         stage('Build') {
@@ -11,9 +12,8 @@ pipeline {
                 script {
                     if (isUnix()) {
                         withEnv([
-                            "JAVA_HOME=/usr/lib/jvm/java-8-openjdk",
-                            "PYTHON_HOME=/C:/Program Files/Wondershare/Recoverit/pythonoffice",
-                            "PATH=${env.PATH}:${JAVA_HOME}/bin:${PYTHON_HOME}"
+                            "JAVA_HOME=/usr/bin",
+                            "PATH=${env.PATH}:/usr/bin"
                         ]) {
                             sh 'echo "Running on Unix"'
                             sh 'javac HelloWorld.java'
@@ -24,7 +24,7 @@ pipeline {
                         withEnv([
                             "JAVA_HOME=C:\\Program Files\\Java\\jdk1.8.0_202",
                             "PYTHON_HOME=C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps",
-                            "PATH=${env.PATH};${JAVA_HOME}\\bin;${PYTHON_HOME}"
+                            "PATH=%JAVA_HOME%\\bin;%PYTHON_HOME%;%PATH%"
                         ]) {
                             bat 'echo "Running on Windows"'
                             bat 'javac HelloWorld.java'
