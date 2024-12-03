@@ -12,7 +12,7 @@ pipeline {
                     if (isUnix()) {
                         withEnv([
                             "JAVA_HOME=/usr/lib/jvm/java-8-openjdk",
-                            "PYTHON_HOME=\usr\bin",
+                            "PYTHON_HOME=\C:\Program Files\Wondershare\Recoverit\pythonoffice",
                             "PATH=${env.PATH}:${JAVA_HOME}/bin:${PYTHON_HOME}"
                         ]) {
                             sh 'echo "Running on Unix"'
