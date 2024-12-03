@@ -1,33 +1,53 @@
 pipeline {
     agent any
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'
+    }
     stages {
         stage('Checkout') {
             steps {
-                // Clone le dépôt GitHub
-                git branch: 'main', url: 'https://github.com/medlaifa/EVALUATION-ProjetJenkins.git'
+                // Récupérer le code source du dépôt
+                checkout scm
             }
         }
-        stage('Build and Execute') {
+        stage('Build Java') {
             steps {
                 script {
-                    if (isUnix()) {
-                        // Définition des variables d'environnement pour Unix
-                        withEnv([
-                            "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64",  
-                            "PATH=${env.PATH}:/usr/lib/jvm/java-11-openjdk-amd64/bin"
-                        ]) {
-                            echo "Running on Unix"
-
-                            // Compilation et exécution du programme Java
-                            sh 'javac HelloWorld.java'
-                            sh 'java HelloWorld'
-
-                            // Exécution du script Python
-                            sh 'python3 hello_world.py'
-                        }
-                    } 
+                    // Compiler le code Java
+                    sh 'javac src/HelloWorld.java'
+                }
+            }
+        }
+        stage('Build Python') {
+            steps {
+                script {
+                    // Exécuter le script Python
+                    sh 'python3 hello_world.py'
+                }
+            }
+        }
+        stage('Test Java') {
+            steps {
+                script {
+                    // Ajouter des tests pour Java ici si nécessaire
+                    echo 'Pas de tests Java pour le moment.'
+                }
+            }
+        }
+        stage('Test Python') {
+            steps {
+                script {
+                    // Ajouter des tests pour Python ici si nécessaire
+                    echo 'Pas de tests Python pour le moment.'
                 }
             }
         }
     }
+    post {
+        always {
+            // Étapes de nettoyage ou de notification après l'exécution du pipeline
+            echo 'Pipeline terminé.'
+        }
+    }
 }
+
