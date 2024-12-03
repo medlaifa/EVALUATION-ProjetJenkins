@@ -27,8 +27,6 @@ pipeline {
                             "PATH=${env.PATH};${JAVA_HOME}\\bin;${PYTHON_HOME}"
                         ]) {
                             bat 'echo "Running on Windows"'
-                            bat 'javac HelloWorld.java'
-                            bat 'java HelloWorld'
                             bat 'python hello.py'
                         }
                     }
