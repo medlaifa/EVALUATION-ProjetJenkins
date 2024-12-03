@@ -1,36 +1,36 @@
-
 pipeline {
     agent any
     stages {
         stage('Checkout') {
             steps {
+                // Clone le dépôt GitHub
                 git branch: 'main', url: 'https://github.com/medlaifa/EVALUATION-ProjetJenkins.git'
             }
         }
-        stage('Build') {
+        stage('Build and Execute') {
             steps {
                 script {
                     if (isUnix()) {
+                        // Définition des variables d'environnement pour Unix
                         withEnv([
-                            "JAVA_HOME=/usr/bin",
-                            "PATH=${env.PATH}:/usr/bin"
+                            "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64",  
+                            "PATH=${env.PATH}:/usr/lib/jvm/java-11-openjdk-amd64/bin"
                         ]) {
-                            sh 'echo "Running on Unix"'
+                            echo "Running on Unix"
+
+                            // Compilation et exécution du programme Java
                             sh 'javac HelloWorld.java'
                             sh 'java HelloWorld'
-                            sh 'python3 hello.py'
+
+                            // Exécution du script Python
+                            sh 'python3 hello_world.py'
                         }
                     } else {
-                        withEnv([
-                            "JAVA_HOME=C:\\Program Files\\Java\\jdk1.8.0_202",
-                            "PYTHON_HOME=C:\\Users\\admin\\AppData\\Local\\Microsoft\\WindowsApps",
-                            "PATH=%JAVA_HOME%\\bin;%PYTHON_HOME%;%PATH%"
-                        ]) {
-                            bat 'echo "Running on Windows"'
-                            bat 'javac HelloWorld.java'
-                            bat 'java HelloWorld'
-                            bat 'python hello.py'
-                        }
+                        // Gestion des systèmes Windows (facultatif)
+                        echo "Running on Windows"
+                        bat 'javac HelloWorld.java'
+                        bat 'java HelloWorld'
+                        bat 'python hello_world.py'
                     }
                 }
             }
