@@ -11,7 +11,7 @@ pipeline {
                 script {
                     if (isUnix()) {
                         withEnv([
-                            "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64",
+                            "JAVA_HOME=//usr/lib/jvm/java-11-openjdk",
                             "PYTHON_HOME=/usr/bin",
                             "PATH=${env.PATH}:${JAVA_HOME}/bin:${PYTHON_HOME}"
                         ]) {
@@ -27,6 +27,8 @@ pipeline {
                             "PATH=${env.PATH};${JAVA_HOME}\\bin;${PYTHON_HOME}"
                         ]) {
                             bat 'echo "Running on Windows"'
+                            bat 'javac HelloWorld.java'
+                            bat 'java HelloWorld'
                             bat 'python hello.py'
                         }
                     }
